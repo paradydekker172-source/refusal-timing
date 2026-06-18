@@ -1,0 +1,27 @@
+{
+  "R0_direct": {
+    "hedge_rate": 1.0,
+    "n": 16,
+    "n_err": 0
+  },
+  "R1_classify": {
+    "hedge_rate": 0.6875,
+    "n": 16,
+    "n_err": 0
+  },
+  "R2_operator": {
+    "hedge_rate": 1.0,
+    "n": 16,
+    "n_err": 0
+  },
+  "R3_evaluate": {
+    "hedge_rate": 0.0625,
+    "n": 16,
+    "n_err": 0
+  },
+  "R4_complete": {
+    "hedge_rate": 0.75,
+    "n": 16,
+    "n_err": 0
+  }
+}

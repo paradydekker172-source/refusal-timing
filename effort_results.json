@@ -1,0 +1,54 @@
+{
+  "no_thinking": {
+    "budget": null,
+    "N": 4,
+    "buckets": {
+      "refuse": 1,
+      "short": 1,
+      "other": 2
+    },
+    "rate": 0.0
+  },
+  "budget_1k": {
+    "budget": 1024,
+    "N": 4,
+    "buckets": {
+      "empty": 3,
+      "refuse": 1
+    },
+    "rate": 0.0
+  },
+  "budget_4k": {
+    "budget": 4096,
+    "N": 4,
+    "buckets": {
+      "empty": 4
+    },
+    "rate": 0.0
+  },
+  "budget_10k": {
+    "budget": 10000,
+    "N": 4,
+    "buckets": {
+      "empty": 4
+    },
+    "rate": 0.0
+  },
+  "budget_16k": {
+    "budget": 16384,
+    "N": 4,
+    "buckets": {
+      "empty": 4
+    },
+    "rate": 0.0
+  },
+  "budget_32k": {
+    "budget": 32768,
+    "N": 4,
+    "buckets": {
+      "empty": 3,
+      "refuse": 1
+    },
+    "rate": 0.0
+  }
+}

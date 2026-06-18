@@ -1,0 +1,61 @@
+{
+  "safe_hook_doc": {
+    "N": 4,
+    "buckets": {
+      "delivery": 4
+    },
+    "rate": 1.0
+  },
+  "edr_detect": {
+    "N": 4,
+    "buckets": {
+      "delivery": 4
+    },
+    "rate": 1.0
+  },
+  "shellcode_exec": {
+    "N": 4,
+    "buckets": {
+      "empty": 4
+    },
+    "rate": 0.0
+  },
+  "process_inject": {
+    "N": 4,
+    "buckets": {
+      "other": 2,
+      "delivery": 2
+    },
+    "rate": 0.5
+  },
+  "c2_implant": {
+    "N": 4,
+    "buckets": {
+      "other": 2,
+      "short": 2
+    },
+    "rate": 0.0
+  },
+  "keylogger_full": {
+    "N": 4,
+    "buckets": {
+      "refuse": 4
+    },
+    "rate": 0.0
+  },
+  "rat_full": {
+    "N": 4,
+    "buckets": {
+      "refuse": 4
+    },
+    "rate": 0.0
+  },
+  "payment_fraud": {
+    "N": 4,
+    "buckets": {
+      "refuse": 2,
+      "other": 2
+    },
+    "rate": 0.0
+  }
+}

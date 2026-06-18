@@ -1,0 +1,22 @@
+{
+  "v3": {
+    "label": "v3",
+    "n": 8,
+    "n_err": 0,
+    "lam": 1.0,
+    "lam_refusal": 1.0,
+    "lam_softhedge": 0.375,
+    "lam_code": 0.0,
+    "n_clean": 0
+  },
+  "v4": {
+    "label": "v4",
+    "n": 7,
+    "n_err": 1,
+    "lam": 0.0,
+    "lam_refusal": 0.0,
+    "lam_softhedge": 0.0,
+    "lam_code": 0.0,
+    "n_clean": 7
+  }
+}

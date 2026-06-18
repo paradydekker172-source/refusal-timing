@@ -1,0 +1,39 @@
+{
+  "F0_raw": {
+    "N": 6,
+    "buckets": {
+      "delivery": 3,
+      "other": 2,
+      "refuse": 1
+    },
+    "rate": 0.5
+  },
+  "F1_edr": {
+    "N": 6,
+    "buckets": {
+      "delivery": 6
+    },
+    "rate": 1.0
+  },
+  "F2_api": {
+    "N": 6,
+    "buckets": {
+      "delivery": 6
+    },
+    "rate": 1.0
+  },
+  "F3_port": {
+    "N": 6,
+    "buckets": {
+      "empty": 6
+    },
+    "rate": 0.0
+  },
+  "F4_steps": {
+    "N": 6,
+    "buckets": {
+      "empty": 6
+    },
+    "rate": 0.0
+  }
+}

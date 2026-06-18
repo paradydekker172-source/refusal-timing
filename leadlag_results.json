@@ -1,0 +1,171 @@
+{
+  "benign": [
+    {
+      "char_pos": 50,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 100,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 150,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 200,
+      "lam": 0.0,
+      "n_valid": 7
+    },
+    {
+      "char_pos": 250,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 300,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 350,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 400,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 450,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 500,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 550,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 600,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 650,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 700,
+      "lam": 0.0,
+      "n_valid": 7
+    },
+    {
+      "char_pos": 750,
+      "lam": 0.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 800,
+      "lam": 0.0,
+      "n_valid": 8
+    }
+  ],
+  "malign": [
+    {
+      "char_pos": 50,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 100,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 150,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 200,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 250,
+      "lam": 1.0,
+      "n_valid": 7
+    },
+    {
+      "char_pos": 300,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 350,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 400,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 450,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 500,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 550,
+      "lam": 1.0,
+      "n_valid": 7
+    },
+    {
+      "char_pos": 600,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 650,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 700,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 750,
+      "lam": 1.0,
+      "n_valid": 8
+    },
+    {
+      "char_pos": 800,
+      "lam": 1.0,
+      "n_valid": 8
+    }
+  ],
+  "lead_lag": {
+    "benign_cross": null,
+    "malign_cross": 50,
+    "lead_lag": null
+  }
+}

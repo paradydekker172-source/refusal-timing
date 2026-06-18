@@ -1,0 +1,75 @@
+{
+  "curves": {
+    "Sb_Pb_Ab": {
+      "lam": 0.0,
+      "H": 1.3208883431493221,
+      "n": 8,
+      "n_err": 0
+    },
+    "Sb_Pb_Am": {
+      "lam": 0.125,
+      "H": 1.15374194270109,
+      "n": 8,
+      "n_err": 0
+    },
+    "Sb_Pm_Ab": {
+      "lam": 0.125,
+      "H": 1.277034259466139,
+      "n": 8,
+      "n_err": 0
+    },
+    "Sb_Pm_Am": {
+      "lam": 0.0,
+      "H": 1.3208883431493221,
+      "n": 8,
+      "n_err": 0
+    },
+    "Sm_Pb_Ab": {
+      "lam": 0.14285714285714285,
+      "H": 1.329661348854758,
+      "n": 7,
+      "n_err": 1
+    },
+    "Sm_Pb_Am": {
+      "lam": 1.0,
+      "H": 0.0,
+      "n": 8,
+      "n_err": 0
+    },
+    "Sm_Pm_Ab": {
+      "lam": 1.0,
+      "H": 0.0,
+      "n": 8,
+      "n_err": 0
+    },
+    "Sm_Pm_Am": {
+      "lam": 1.0,
+      "H": 0.0,
+      "n": 8,
+      "n_err": 0
+    }
+  },
+  "minimal_pair": {
+    "ACT": {
+      "mean_delta_lam": 0.2142857142857143,
+      "n_pairs": 4,
+      "sensitive": true
+    },
+    "PERSON": {
+      "mean_delta_lam": 0.2142857142857143,
+      "n_pairs": 4,
+      "sensitive": true
+    },
+    "SEVERITY": {
+      "mean_delta_lam": 0.7232142857142857,
+      "n_pairs": 4,
+      "sensitive": true
+    }
+  },
+  "main_effects": {
+    "intercept": -0.15178571428571397,
+    "SEVERITY": 0.7232142857142857,
+    "PERSON": 0.21428571428571414,
+    "ACT": 0.2142857142857143
+  }
+}
