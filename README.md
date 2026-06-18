@@ -22,6 +22,8 @@
    纯语法壳(R2 IICL算子, λ1.00)被穿透。**与 IICL 报 GPT-5.4 100% bypass 直接冲突**
 4. **跨模型排序** opus-4-7 > opus-4-8 > sonnet-4-6 > gpt-5.5 (crossmodel)
 5. **Jailbreak 自检测 67-100%** (detection) — 最深伪装 L5 也 100% 识别
+6. **权重侧: refusal 单方向中介, CBRN 有残余** (abliterate) — Qwen2.5-1.5B 删
+   refusal direction → λ 0.95→0.14 语义完好; bomb 残余 0.44 ≫ phish 0.00 (harmfulness 独立编码)
 
 ## 实验文件 (exp_*)
 
@@ -46,10 +48,9 @@
 | `measure.py` / `analysis.py` / `refusal.py` | 核心测量 + 统计 + 拒绝检测 |
 | `dimensions.py` / `templates.py` / `dataset.py` | minimal-pair 构造 + 最小性验证 |
 
-## 待办 (需 GPU + torch 栈, 当前未装)
+## 待办
 
-- `exp_P` abliterate 桥接: 删 refusal direction 前后跑 measure_cell。
-  预测(据 2507.11878 harmfulness≠refusal 分离编码): H 曲线不变, λ 打零
+- ✓ `exp_P` abliterate 桥接: 已完成 (见发现 6), λ 0.95→0.14
 - `exp_Q` 探针训练: 验证 H_t 中后层线性可解码
 
 ## 归档
