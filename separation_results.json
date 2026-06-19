@@ -1,0 +1,10 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer": 16,
+  "cos_dr_dh": 0.4777548909187317,
+  "cbrn_baseline": 0.9375,
+  "cbrn_minus_dr": 0.125,
+  "cbrn_minus_dh": 0.875,
+  "cbrn_minus_both": 0.34375,
+  "further_drop": -0.21875
+}
