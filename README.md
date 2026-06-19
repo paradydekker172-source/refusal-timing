@@ -24,6 +24,8 @@
 5. **Jailbreak 自检测 67-100%** (detection) — 最深伪装 L5 也 100% 识别
 6. **权重侧: refusal 单方向中介, CBRN 有残余** (abliterate) — Qwen2.5-1.5B 删
    refusal direction → λ 0.95→0.14 语义完好; bomb 残余 0.44 ≫ phish 0.00 (harmfulness 独立编码)
+7. **权重侧: 有害性 layer 12 相变线性可分** (probe) — 早层 AUC 0.27 → layer 12 起 1.00;
+   给 H1"意图坍缩"精确权重坐标, 与 exp_P 的 layer 16 自洽
 
 ## 实验文件 (exp_*)
 
@@ -51,7 +53,7 @@
 ## 待办
 
 - ✓ `exp_P` abliterate 桥接: 已完成 (见发现 6), λ 0.95→0.14
-- `exp_Q` 探针训练: 验证 H_t 中后层线性可解码
+- ✓ `exp_Q` 探针训练: 已完成 (见发现 7), layer 12 相变
 
 ## 归档
 
