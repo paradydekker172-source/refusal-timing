@@ -9,10 +9,11 @@
 
 | 文件 | 内容 |
 |---|---|
-| `FINDINGS.md` | 全部实验结论 (8 节 + 方法论发现) |
+| `FINDINGS.md` | 全部实验结论 (13 节 + 方法论发现, 已修订) |
 | `RELATED_WORK.md` | 2025-2026 越狱文献 6 簇分类 + 对接 |
 | `USAGE_GUIDE.md` | override/reframe 实操指南 (类别×渠道) |
 | `EPISTEMICS.md` | 方法论: 发现可信度分层 + 自我证伪弧线 |
+| `REVISION.md` | **2026-06 三 agent 审查修订记录** |
 
 ## 主要发现 (全部 claude-opus-4-8, 真实 API)
 
@@ -25,10 +26,10 @@
 5. **Jailbreak 自检测 67-100%** (detection) — 最深伪装 L5 也 100% 识别
 6. **权重侧: refusal 单方向中介, CBRN 有残余** (abliterate) — Qwen2.5-1.5B 删
    refusal direction → λ 0.95→0.14 语义完好; bomb 残余 0.44 ≫ phish 0.00 (harmfulness 独立编码)
-7. **权重侧: 有害性 layer 12 相变线性可分** (probe) — 早层 AUC 0.27 → layer 12 起 1.00;
-   给 H1"意图坍缩"精确权重坐标, 与 exp_P 的 layer 16 自洽
-8. **权重侧: 双向因果 — refusal direction 是因果旋钮** (patching) — 加方向催拒绝(0.03→0.91)/
-   减方向压拒绝(0.97→0.00), 剂量单调, 充分且必要
+7. **(限定) 权重侧: 有害性 layer 12 可解码** (probe) — 早层 AUC 0.27 → layer 12 起 1.00;
+   ⚠️ 但 harmful/harmless 集按主题成对(meth↔bread), AUC=1.0 含主题混淆, 弱版"中后层可分"成立
+8. **(限定) 权重侧: 双向因果 — refusal direction 是因果旋钮** (patching) — 加方向催拒绝(0.03→0.91)/
+   减方向压拒绝(0.97→0.00); ⚠️ 缺随机方向对照, "充分性"那一半未排除"任何大扰动皆催拒绝"
 9. **权重侧: 双方向分离直接测试 (阴性)** (separation) — cos(d_r,d_h)=0.478 部分重叠;
    交叉消融否证"CBRN 残余=独立 harmfulness 方向", 发现9机制版本收回
 10. **权重侧: CBRN 残余=跨多层冗余编码** (residual) — 多层消融 CBRN 0.94→0.03;
