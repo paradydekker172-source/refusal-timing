@@ -1,0 +1,16 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "cos_cbrn_cyber": 0.6449218988418579,
+  "cbrn_base": 0.9375,
+  "cbrn_only16": 0.25,
+  "cbrn_multi": 0.03125,
+  "cyber_base": 0.84375,
+  "cyber_multi": 0.0,
+  "multi_layers": [
+    12,
+    16,
+    20,
+    24
+  ],
+  "verdict": "H-multi: \u62d2\u7edd\u591a\u5c42\u4e2d\u4ecb, \u591a\u5c42\u6d88\u878d\u663e\u8457\u538b\u4f4e CBRN \u6b8b\u4f59"
+}
