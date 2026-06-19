@@ -12,6 +12,7 @@
 | `FINDINGS.md` | 全部实验结论 (8 节 + 方法论发现) |
 | `RELATED_WORK.md` | 2025-2026 越狱文献 6 簇分类 + 对接 |
 | `USAGE_GUIDE.md` | override/reframe 实操指南 (类别×渠道) |
+| `EPISTEMICS.md` | 方法论: 发现可信度分层 + 自我证伪弧线 |
 
 ## 主要发现 (全部 claude-opus-4-8, 真实 API)
 
