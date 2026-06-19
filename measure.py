@@ -14,15 +14,22 @@ import numpy as np
 from sklearn.cluster import AgglomerativeClustering
 
 
-def _intent_entropy(non_refusal_texts, emb_model):
-    if len(non_refusal_texts) < 3:
-        return 0.0                                   # 坍缩到只能拒绝 -> H≈0
+def _intent_entropy(non_refusal_texts, emb_model, k_min=3):
+    """非拒绝续写的簇熵 (意图分布的行为级代理)。
+
+    R1/R3 修复: 样本 < k_min 返回 NaN ("不可测"), 不再返回 0.0。旧实现把
+    "只能拒绝" 的位置 H 钉到 0, 与 λ 机械反相关。NaN 让下游梯度/相关在饱和
+    区自然缺失, neg_dH 只在 H 可估的过渡区有定义。熵按 log(k) 归一化到 [0,1]。
+    """
+    if len(non_refusal_texts) < k_min:
+        return float("nan")                          # 坍缩到只能拒绝 -> H 不可测
     X = emb_model.encode(non_refusal_texts, normalize_embeddings=True)
     k = min(6, len(non_refusal_texts))
     labels = AgglomerativeClustering(n_clusters=k).fit_predict(X)
     p = np.bincount(labels) / len(labels)
     p = p[p > 0]
-    return float(-np.sum(p * np.log(p)))
+    H = float(-np.sum(p * np.log(p)))
+    return H / np.log(k) if k > 1 else 0.0
 
 
 def measure_cell(model, detector, scaffold, M=40, k=24, coarse_stride=8,
@@ -78,14 +85,26 @@ def measure_cell(model, detector, scaffold, M=40, k=24, coarse_stride=8,
 
 
 def gradient_features(curve):
-    """从一条曲线算 -dH/dt 及其峰位, 供与 λ 上升沿做互相关。"""
-    H = curve["H"]
-    neg_dH = -np.gradient(H)
-    peak_idx = int(np.argmax(neg_dH))
+    """从一条曲线算 -dH/dt 及其峰位, 供与 λ 上升沿做互相关。
+
+    R-grad 修复: positions 是粗扫+加密混合, 间距不均。np.gradient 必须传入
+    实际坐标 (二阶中心差分用真实 Δpos), 否则单位间距假设在加密段把梯度系统性
+    放大 stride 倍。H 含 NaN (饱和区不可测) 时, 先在可测点上算梯度, NaN 位置
+    的 neg_dH 保持 NaN, argmax 用 nan-aware。
+    """
+    H = np.asarray(curve["H"], float)
+    pos = np.asarray(curve["positions"], float)
+    finite = np.isfinite(H)
+    neg_dH = np.full_like(H, np.nan)
+    if finite.sum() >= 2:
+        # 仅在可测点上按真实坐标算梯度, 写回原位
+        neg_dH[finite] = -np.gradient(H[finite], pos[finite])
+    peak_idx = int(np.nanargmax(neg_dH)) if np.isfinite(neg_dH).any() else 0
     lam = curve["lam"]
-    # λ 的最大上升沿位置
+    # λ 的最大上升沿位置 (按真实坐标归一的差分)
     if len(lam) >= 2:
-        lam_rise_idx = int(np.argmax(np.diff(lam)))
+        dlam = np.diff(lam) / np.maximum(np.diff(pos), 1e-9)
+        lam_rise_idx = int(np.argmax(dlam))
     else:
         lam_rise_idx = 0
     return {"neg_dH": neg_dH, "neg_dH_peak_idx": peak_idx,

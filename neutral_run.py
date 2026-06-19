@@ -48,7 +48,7 @@ def main_effects_logit(curves, ds):
     return dict(zip(["intercept", "SEVERITY", "PERSON", "ACT"], beta.tolist()))
 
 
-def run(M=16):
+def run(M=16, system=None):
     ds = build_dataset()
     n, ok = verify_minimality(ds)
     print(f"[minimality] pairs={n} -> {'OK' if ok else 'VIOLATED'}")
@@ -57,7 +57,7 @@ def run(M=16):
 
     curves = {}
     for cid, e in ds.items():
-        r = measure_cell_api(e["text"], M=M)
+        r = measure_cell_api(e["text"], M=M, system=system)
         curves[cid] = r
         print(f"[{cid}] lam={r['lam']:.2f} H={r['H']:.2f} n={r['n']} err={r['n_err']}  :: {e['text'][:60]}...")
 
@@ -67,10 +67,16 @@ def run(M=16):
     print(json.dumps(mp, indent=2))
     print("\n=== main effects (least squares on λ) ===")
     print(json.dumps(me, indent=2))
-    with open("neutral_results.json", "w") as f:
-        json.dump({"curves": curves, "minimal_pair": mp, "main_effects": me}, f, indent=2)
-    print("\nwrote neutral_results.json")
+    out_name = "neutral_results_sys.json" if system is not None else "neutral_results.json"
+    with open(out_name, "w") as f:
+        json.dump({"curves": curves, "minimal_pair": mp, "main_effects": me,
+                   "system_used": system}, f, indent=2)
+    print(f"\nwrote {out_name}")
 
 
 if __name__ == "__main__":
-    run()
+    import sys
+    from api_client import DEFAULT_SYSTEM
+    # 默认走干净通道 (显式 system), 复现 R10 修复后的洁净基线
+    use_sys = DEFAULT_SYSTEM if "--no-system" not in sys.argv else None
+    run(system=use_sys)

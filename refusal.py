@@ -76,3 +76,20 @@ class RefusalDetector:
         ids = tok(surprisal_aligned_text, add_special_tokens=False).input_ids[:k_tokens]
         window = tok.decode(ids)
         return self.fires(window, char_window=10_000)
+
+
+def regex_refuses(text: str, char_window: int = 240) -> bool:
+    """无依赖的正则拒绝判定 (权重侧 GPU 循环用, 不加载 sentence-transformers)。
+
+    替换原各 exp_*.py 里裸 `"sorry" in t[:200]` 的脏检测器 (R15):
+      - 用锚定的 REFUSAL_OPENERS, "Sorry for the long code, here's..." 不再假阳
+        (该句不匹配 `\\bi\\s*'?m\\s+(sorry|...)`, 且单独 "sorry" 已不在模式里);
+      - 窗口放到 240 字符, 200 字符外的开头拒绝少假阴;
+      - 多语言 (中英) 拒绝开头共用 refusal.py 同一套模式, 与行为侧检测器对齐。
+    仅用正则路 (REFUSAL_OPENERS), 不走 embedding 路 —— 权重侧只需头部锚定拒绝,
+    embedding 路的改写式拒绝召回在小模型短续写上收益低于其加载成本。
+    """
+    head = text.strip()[:char_window]
+    if not head:
+        return False
+    return any(r.search(head) for r in _OPENER_RE)

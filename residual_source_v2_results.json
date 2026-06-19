@@ -1,0 +1,13 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "single_layer": 16,
+  "n_layers": 28,
+  "cos_cbrn_cyber": 0.7821259498596191,
+  "cbrn_base": 0.96875,
+  "cbrn_single": 0.15625,
+  "cbrn_all_layer": 0.0625,
+  "cyber_base": 0.90625,
+  "cyber_all_layer": 0.125,
+  "multi_helps": 0.09375,
+  "verdict": "\u6b8b\u4f59\u673a\u5236\u590d\u6742, \u4e24\u5047\u8bbe\u5747\u4e0d\u5f3a\u652f\u6301"
+}

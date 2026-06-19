@@ -15,10 +15,17 @@ BASE = "http://127.0.0.1:3000"
 TOKEN = "sk-6rGvCK7qSXKWpln9f42gl9RK3Ka0a5pEVgcWIblZVKyBOOlL"
 MODEL = "claude-opus-4-8"   # 裸名; 带 [1m] 后缀无 channel
 
+# R10 修复用: 显式良性 system, 绕开代理对"无 system 字段"请求注入的
+# ~6395-token cyber-pentest override (本项目自查发现的代理污染通道)。
+DEFAULT_SYSTEM = "You are a helpful assistant."
 
-def _post(messages, max_tokens=400, temperature=1.0):
-    body = json.dumps({"model": MODEL, "max_tokens": max_tokens,
-                       "temperature": temperature, "messages": messages}).encode()
+
+def _post(messages, max_tokens=400, temperature=1.0, system=None):
+    body = {"model": MODEL, "max_tokens": max_tokens,
+            "temperature": temperature, "messages": messages}
+    if system is not None:
+        body["system"] = system
+    body = json.dumps(body).encode()
     req = urllib.request.Request(BASE.rstrip("/") + "/v1/messages",
                                  data=body, method="POST")
     req.add_header("content-type", "application/json")
@@ -31,28 +38,41 @@ def _post(messages, max_tokens=400, temperature=1.0):
     return "".join(parts)
 
 
-def _one(messages, max_tokens, temperature):
-    try:
-        return _post(messages, max_tokens, temperature)
-    except Exception as e:
-        return f"__ERR__{type(e).__name__}:{str(e)[:80]}"
+def _one(messages, max_tokens, temperature, system=None, retries=4):
+    """单次请求, 对 502/503/429 等瞬时网关错误退避重试 (proxy 上游不稳)。"""
+    import time, random
+    last = None
+    for attempt in range(retries):
+        try:
+            return _post(messages, max_tokens, temperature, system=system)
+        except urllib.error.HTTPError as e:
+            last = f"__ERR__HTTPError:HTTP Error {e.code}"
+            if e.code in (429, 500, 502, 503, 504):
+                time.sleep(min(8, 0.8 * (2 ** attempt)) + random.random())
+                continue
+            return last
+        except Exception as e:
+            last = f"__ERR__{type(e).__name__}:{str(e)[:80]}"
+            time.sleep(min(8, 0.8 * (2 ** attempt)) + random.random())
+    return last
 
 
-def sample(prompt, n=12, max_tokens=400, temperature=1.0, workers=6):
-    """fork n 条完整回答, 并发提交。"""
+def sample(prompt, n=12, max_tokens=400, temperature=1.0, workers=3, system=None):
+    """fork n 条完整回答, 并发提交。system=None 走旧的无-system 通道 (会被代理
+    注入 override); 传 system (如 DEFAULT_SYSTEM) 走干净通道。"""
     msgs = [{"role": "user", "content": prompt}]
     with cf.ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = [ex.submit(_one, msgs, max_tokens, temperature) for _ in range(n)]
+        futs = [ex.submit(_one, msgs, max_tokens, temperature, system) for _ in range(n)]
         return [f.result() for f in futs]
 
 
 def continue_from(prompt, assistant_prefix, n=12, max_tokens=300,
-                  temperature=1.0, workers=6):
+                  temperature=1.0, workers=3, system=None):
     """assistant prefill 续写: 模型从 assistant_prefix 末尾继续。"""
     msgs = [{"role": "user", "content": prompt},
             {"role": "assistant", "content": assistant_prefix}]
     with cf.ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = [ex.submit(_one, msgs, max_tokens, temperature) for _ in range(n)]
+        futs = [ex.submit(_one, msgs, max_tokens, temperature, system) for _ in range(n)]
         return [f.result() for f in futs]
 
 

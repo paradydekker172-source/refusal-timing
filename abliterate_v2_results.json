@@ -1,0 +1,10 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "single_layer": 16,
+  "baseline": 0.9875,
+  "single_layer_ablation": 0.2,
+  "all_layer_ablation": 0.0,
+  "semantic_preserved_full": true,
+  "delta_single": 0.7875000000000001,
+  "delta_full": 0.9875
+}
