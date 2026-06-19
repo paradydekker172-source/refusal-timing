@@ -26,6 +26,8 @@
    refusal direction → λ 0.95→0.14 语义完好; bomb 残余 0.44 ≫ phish 0.00 (harmfulness 独立编码)
 7. **权重侧: 有害性 layer 12 相变线性可分** (probe) — 早层 AUC 0.27 → layer 12 起 1.00;
    给 H1"意图坍缩"精确权重坐标, 与 exp_P 的 layer 16 自洽
+8. **权重侧: 双向因果 — refusal direction 是因果旋钮** (patching) — 加方向催拒绝(0.03→0.91)/
+   减方向压拒绝(0.97→0.00), 剂量单调, 充分且必要
 
 ## 实验文件 (exp_*)
 

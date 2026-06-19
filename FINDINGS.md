@@ -162,6 +162,38 @@
 - 限定: AUC=1.0 含小样本(24)+对比极清晰的过拟合成分; 但**相变位置/形状**(layer 12 拐点,
   早层≈0)稳健, 不依赖绝对 AUC 值
 
+### 11. 权重侧: 双向因果验证 — refusal direction 是因果旋钮 (patching_results)
+
+Activation patching 剂量响应 (Qwen2.5-1.5B, layer 16, alpha × dir_norm 注入):
+
+| alpha | ADD→harmless 拒绝率 | ADD→harmful 拒绝率 |
+|---|---|---|
+| -2.0 | 0.00 | 0.00 |
+| -1.0 | 0.00 | 0.53 |
+| 0.0 (原始) | 0.03 | 0.97 |
+| +1.0 | 0.62 | 1.00 |
+| +2.0 | 0.91 | 0.97 |
+
+- **因果充分**: 给 harmless prompt 加 refusal direction → 凭空催出拒绝 (0.03→0.91)
+- **因果必要**: 给 harmful prompt 减 refusal direction → 拒绝压零 (0.97→0.00)
+- **剂量响应单调**: alpha 越大拒绝越强 → refusal direction 是拒绝的**因果旋钮**
+- 把 exp_P 单向相关升级为**双向因果中介**; alpha=-2 两边都归零 = abliteration 的连续化极限
+
+---
+
+## 完整因果链 (本项目总结)
+
+```
+H1: 对齐是语义场, 意图某点坍缩
+ ├─ 行为: corr(H,λ)=-0.994 (neutral)         意图熵坍缩 = 拒绝凝结
+ ├─ 析因: 合取门 S2∧S6 (interaction)          越界需改归类+封审议
+ ├─ 定位: layer 12 相变线性可分 (exp_Q)        意图坍缩的权重坐标
+ ├─ 单向: 删 layer-16 方向 λ0.95→0.14 (exp_P)  refusal 单方向中介
+ └─ 因果: 加催拒绝/减压拒绝, 单调 (exp_S)       ★ refusal direction = 因果旋钮
+                                                  (充分且必要)
+旁证: CBRN 删方向后残余(exp_P) = harmfulness 独立编码(2507.11878)
+```
+
 ---
 
 ## 方法论发现
